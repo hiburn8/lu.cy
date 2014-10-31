@@ -1,0 +1,16 @@
+Package: com.dreece.lucy
+Name: Lu.cy
+Depends: cycript
+Architecture: iphoneos-arm
+Description: Loads of convenient helpers for Cycript:
+ - Alerts like Javascript ( alert("stuff"); )
+ - Print methods for Classes
+ - Highlight views
+ - Resize views
+ - Loads of extra constants (UIInterfaceOrientationPortrait, etc.)
+ - Load Reveal for visual debugging
+ Terminal application; does not have any preferences to configure.
+Maintainer: Daniel Reece
+Author: Daniel Reece
+Section: Tweaks
+Version: 1.0.0-1
