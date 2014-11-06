@@ -1,6 +1,6 @@
 # Lu.cy
 
-wrapper for cycript with a bunch of useful functions. Code was stolen from lots of different people.. even me.. but namely Adam Bell.
+Wrapper for cycript with a bunch of useful functions. Code was stolen from lots of different people.. even me.. but namely Adam Bell.
 
 ### How do I Lu.cy?
 ```
@@ -22,9 +22,10 @@ view.**unhighlight()**
 **setWidth(**_width, view_**)** : sets the width of a view's frame.  
 **setHeight(**_height, view_**)** : sets the height of a view's frame.  
 
-**revealApp(pathtodylib)** : Loads and starts [Reveal](http://www.revealapp.com) for said process.  
-  
-Oh and [cycript.org](http://www.cycript.org/).
+**reveal(pathtodylib)** : Loads and starts [Reveal](http://www.revealapp.com) for said process.
+**flex(pathtodylib)** : Loads and starts [FLEX/Flipboard Explorere](https://github.com/Flipboard/FLEX) for said process.
+
+**help()** : Shows some help in the form of an alert on the device. Logging to console is old-fashioned.
 
 ### License?
 Whatever Adam Bell’s license is for fan.cy
