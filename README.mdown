@@ -18,14 +18,13 @@ view.**highlight()**
 view.**unhighlight()**  
 
 **setX(**_x, view_**)** : sets the x origin on a view's frame.  
-**setY(**_y, view_**)** : sets the y origin on a view's frame.  
+**setY(**_y, view_**)** : sets the y origin on a view's frame.
 **setWidth(**_width, view_**)** : sets the width of a view's frame.  
 **setHeight(**_height, view_**)** : sets the height of a view's frame.  
 
-**reveal(pathtodylib)** : Loads and starts [Reveal](http://www.revealapp.com) for said process.
-**flex(pathtodylib)** : Loads and starts [FLEX/Flipboard Explorere](https://github.com/Flipboard/FLEX) for said process.
-
-**help()** : Shows some help in the form of an alert on the device. Logging to console is old-fashioned.
+**reveal(pathtodylib)** : Loads and starts [Reveal](http://www.revealapp.com) for said process.  
+**flex(pathtodylib)** : Loads and starts [FLEX/Flipboard Explorere](https://github.com/Flipboard/FLEX) for said process.  
+**help()** : Shows some help in the form of an alert on the device. Logging to console is old-fashioned.  
 
 ### License?
 Whatever Adam Bell’s license is for fan.cy
