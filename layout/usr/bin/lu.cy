@@ -6,7 +6,7 @@
 
 // Don't want to inject these scripts multiple times :D
 // I know this makes no sense, but no u
-if (typeof fancySetup === 'undefined') {
+if (typeof fancySetup === 'undefined'){
 
     @import com.saurik.substrate.MS;
 
@@ -135,6 +135,10 @@ if (typeof fancySetup === 'undefined') {
         frame.size.height = height;
     }
 
+    function showview(view){ UIApp.keyWindow.rootViewController = [[view alloc] init]}
+
+//pretty-much everything below here is from ThatPentestGuy @HBRN8
+
     function alert(message, title) {
         
         if (typeof message === 'undefined'){ message = "alert";}
@@ -148,30 +152,6 @@ if (typeof fancySetup === 'undefined') {
         return alert;
     }
 
-function hhh(){
-
-var words = ["How to fan.cy",
-    "alert(title, message)",
-    "methods(class)",
-    "highlight(view) view.highlight()",
-    "unhighlight(view) view.unhighlight()",
-    "setX(x, view) setY(y, view)",
-    "setWidth(width, view) setHeight(height, view)",
-    "revealApp(path)",
-    ];
-
-for(var i = 0; i < words.length; i++) {
-            try {
-               system.print("Failed to load function: " + words[i]);
-                }
-            } catch(e) {
-                system.print("Failed to load function: " + words[i]);
-        
-            }
-        }
-    
-
-
     function help(){
     var docs = ['alert(title, message)',
     '\nmethods(class)',
@@ -184,25 +164,45 @@ for(var i = 0; i < words.length; i++) {
     '\nflex(path)']
     alert(docs, "How to fan.cy");
     }
-        
-    function showview(view){ UIApp.keyWindow.rootViewController = [[view alloc] init]}
 
-    function reveal(path) {
-        if (typeof path !== 'undefined'){ path = path.toString();}
-        else {
-            if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
-                var path = "/Library/MobileSubstrate/DynamicLibraries/";}
-            else
-            {var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";}         
+    function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
         }
-        
-        if (dlopen(path + "libReveal.dylib", RTLD_NOW) === null){
-            alert("Error", "failed to load revealApp");
+    }
+    }
+
+    // unlock("1234", "s") will run silently and return nothing
+    function unlock(passcode, mode){
+    sucess = [[SBLockScreenManager sharedInstance] attemptUnlockWithPasscode:passcode];
+    if (typeof mode === 'undefined'){
+    return sucess;
+    }
+    else {
+        mode = mode.toString();
+        if (mode == "s"){
         }
-        else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
-            alert("Success", "revealApp library loaded");
-        }
+    }
+    }
+
+    // returns nothing. bruteforces passcode as fast as possible.
+    function brute(){
+    for (n=0; n<=9999; n++){
+    guess = n.toString();
+
+    if (guess < 10){
+    guess = "000".concat(guess);
+    }
+    if (guess > 9 && guess <100){
+    guess = "00".concat(guess);
+    }
+    if (guess > 99 && guess <1000){
+    guess = "0".concat(guess);
+    }
+    unlock(guess);
+    }
     }
 
 
@@ -224,10 +224,28 @@ for(var i = 0; i < words.length; i++) {
         }
     }
 
+    function reveal(path) {
+        if (typeof path !== 'undefined'){ path = path.toString();}
+        else {
+            if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
+                var path = "/Library/MobileSubstrate/DynamicLibraries/";}
+            else
+            {var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";}         
+        }
+        
+        if (dlopen(path + "libReveal.dylib", RTLD_NOW) === null){
+            alert("Error", "failed to load revealApp");
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+            alert("Success", "revealApp library loaded");
+        }
+    }
+
 }
 
 fancySetup = 'Go Go Gadget Fancy';
 
-// Disable printing above message ^
-function nou() {}
-nou();
+// Disable printing above message
+function cls() {}
+cls();
