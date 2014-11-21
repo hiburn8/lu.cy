@@ -37,6 +37,13 @@ if (typeof fancySetup === 'undefined') {
     CATransform3D = new Type("{CATransform3D}");
     UIEdgeInsets = new Type("{UIEdgeInsets}");
 
+    function include(fn) {
+      var t = [new NSTask init]; [t setLaunchPath:@"/usr/bin/cycript"]; [t setArguments:["-c", fn]];
+      var p = [NSPipe pipe]; [t setStandardOutput:p]; [t launch]; [t waitUntilExit];  [t release];
+      var s = [new NSString initWithData:[[p fileHandleForReading] readDataToEndOfFile] encoding:4];
+      var r = this.eval(s.toString()); [s release]; return r;
+    }
+
     // Me
     CGAffineTransformIdentity = CGAffineTransformMakeScale(1,1);
     CATransform3DIdentity = CATransform3DMakeScale(1,1,1);
@@ -53,25 +60,6 @@ if (typeof fancySetup === 'undefined') {
     UIInterfaceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown;
     UIInterfaceOrientationLandscapeLeft = UIDeviceOrientationLandscapeRight;
     UIInterfaceOrientationLandscapeRight = UIDeviceOrientationLandscapeLeft;
-
-    function alert(title, message) {
-        title = title.toString();
-        message = message.toString();
-        var alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
-        [alert show];
-
-        return alert;
-    }
-
-        function help() {
-
-        var docs = "alert(title, message)\n methods(class)\n highlight(view)\n view.highlight()\n unhighlight(view)\n view.unhighlight()\n setX(x, view)\n setY(y, view)\n setWidth(width, view)\n setHeight(height, view)\n revealApp(path)"
-        
-        var alert = [[UIAlertView alloc] initWithTitle:"fan.cy" message:docs delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
-        [alert show];
-
-        return alert;
-    }
 
     function methods(className, methodToSearchFor) {
         var methods = new Array();
@@ -147,28 +135,96 @@ if (typeof fancySetup === 'undefined') {
         frame.size.height = height;
     }
 
+    function alert(message, title) {
+        
+        if (typeof message === 'undefined'){ message = "alert";}
+        else {message = message.toString();}
+        if (typeof title === 'undefined'){ title = "Cycript";}
+        else {title = title.toString();}
 
-    function revealApp(path) {
-        if (typeof path === 'undefined'){
+        var alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
+        [alert show];
 
-            if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
-            dlopen("/Library/MobileSubstrate/DynamicLibraries/libReveal.dylib", RTLD_NOW);
-            }
-            else
-            {
-            dlopen("/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/libReveal.dylib", RTLD_NOW);
+        return alert;
+    }
+
+function hhh(){
+
+var words = ["How to fan.cy",
+    "alert(title, message)",
+    "methods(class)",
+    "highlight(view) view.highlight()",
+    "unhighlight(view) view.unhighlight()",
+    "setX(x, view) setY(y, view)",
+    "setWidth(width, view) setHeight(height, view)",
+    "revealApp(path)",
+    ];
+
+for(var i = 0; i < words.length; i++) {
+            try {
+               system.print("Failed to load function: " + words[i]);
+                }
+            } catch(e) {
+                system.print("Failed to load function: " + words[i]);
+        
             }
         }
-        else {
-        path = path.toString();
-        dlopen(path, RTLD_NOW);
-        }     
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+    
+
+
+    function help(){
+    var docs = ['alert(title, message)',
+    '\nmethods(class)',
+    '\nhighlight(view) view.highlight()',
+    '\nunhighlight(view) view.unhighlight()',
+    '\nsetX(x, view) setY(y, view)',
+    '\nsetWidth(width, view)',
+    '\nsetHeight(height, view)',
+    '\nreveal(path)',
+    '\nflex(path)']
+    alert(docs, "How to fan.cy");
     }
+        
+    function showview(view){ UIApp.keyWindow.rootViewController = [[view alloc] init]}
+
+    function reveal(path) {
+        if (typeof path !== 'undefined'){ path = path.toString();}
+        else {
+            if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
+                var path = "/Library/MobileSubstrate/DynamicLibraries/";}
+            else
+            {var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";}         
+        }
+        
+        if (dlopen(path + "libReveal.dylib", RTLD_NOW) === null){
+            alert("Error", "failed to load revealApp");
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+            alert("Success", "revealApp library loaded");
+        }
+    }
+
+
+    function flex(path) {
+        if (typeof path !== 'undefined'){ path = path.toString();}
+        else {
+             if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
+                var path = "/Library/MobileSubstrate/DynamicLibraries/";}
+            else
+            {var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";}     
+        }
+        
+        if (dlopen(path + "FLEXDylib.dylib", RTLD_NOW) === null){
+            alert("Error", "failed to load FLEX");
+        }
+        else {
+            [[FLEXManager sharedManager] showExplorer];
+            alert("Success", "FLEX library loaded");
+        }
+    }
+
 }
-
-
-
 
 fancySetup = 'Go Go Gadget Fancy';
 
