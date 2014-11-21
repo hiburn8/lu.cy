@@ -188,7 +188,12 @@ if (typeof fancySetup === 'undefined'){
     }
 
     // returns nothing. bruteforces passcode as fast as possible.
-    function brute(){
+
+    function forceunlock(tick){
+
+    if (typeof tick === 'undefined'){var ti = 500;}
+    else {var ti = tick/2;}
+
     for (n=0; n<=9999; n++){
     guess = n.toString();
 
@@ -201,7 +206,15 @@ if (typeof fancySetup === 'undefined'){
     if (guess > 99 && guess <1000){
     guess = "0".concat(guess);
     }
-    unlock(guess);
+    var status = unlock(guess);
+    sleep(ti);
+    if (status == 1){
+        n=10000;
+        return guess;
+    }
+    else{
+        sleep(ti);
+    }
     }
     }
 
