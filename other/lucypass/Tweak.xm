@@ -7,6 +7,7 @@
 @interface SBLockScreenManager : NSObject
 +(id)sharedInstance;
 -(BOOL)attemptUnlockWithPasscode:(id)arg1;
+- (void)remoteLock:(_Bool)arg1;
 @end
 
 @implementation LuCyPasscode
@@ -24,14 +25,13 @@
 	return [[%c(SBLockScreenManager) sharedInstance] attemptUnlockWithPasscode:passcode];
 }
 
-
 -(void)lock {
 	[[%c(SBLockScreenManager) sharedInstance] remoteLock:0];
 }
 
 -(NSString *)brute {
 
-	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 0){
+	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 1){
 		
 		NSLog(@"[lu.cy] Brute forcing passcode...");
 		for(int i = 0; i <= 9999; i++) {
@@ -46,6 +46,7 @@
 		}
 		return @"Unable to brute force passcode";
 	}
+	return @"Device is currently unlocked";
 }
 
 @end
