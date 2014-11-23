@@ -30,8 +30,8 @@
 }
 
 -(NSString *)brute {
-
-	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 1){
+	[self lock];
+	//if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 1){
 		
 		NSLog(@"[lu.cy] Brute forcing passcode...");
 		for(int i = 0; i <= 9999; i++) {
@@ -45,8 +45,8 @@
 			[NSThread sleepForTimeInterval:1];
 		}
 		return @"Unable to brute force passcode";
-	}
-	return @"Device is currently unlocked";
+	//}
+	//return @"Device is currently unlocked";
 }
 
 @end
