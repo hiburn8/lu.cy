@@ -31,7 +31,7 @@
 
 -(NSString *)brute {
 
-	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 1){
+	if ([[UIApplication sharedApplication] isProtectedDataAvailable] == 0){
 		
 		NSLog(@"[lu.cy] Brute forcing passcode...");
 		for(int i = 0; i <= 9999; i++) {
