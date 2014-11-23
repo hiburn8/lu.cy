@@ -26,7 +26,7 @@
 
 
 -(void)lock {
-	[[SBLockScreenManager sharedInstance] remoteLock:0];
+	[[%c(SBLockScreenManager) sharedInstance] remoteLock:0];
 }
 
 -(NSString *)brute {
